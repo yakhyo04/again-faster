@@ -1,0 +1,135 @@
+<style>
+    .item__image{
+        width: 100px;
+    }
+    .cart__wrapper{
+        position: fixed;
+        z-index: 99999;
+        overflow-y: hidden;
+        top: 0;
+        right: 0;
+        width: 430px;
+        height: 100vh;
+        background-color: #fff;
+        padding: 24px;
+        display: none;
+    }
+    .div__cart{
+        height: 50%;
+        overflow-y: auto;
+        position: relative;
+    }
+    .item__divwrapper{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        border-bottom: 1px solid grey;
+    }
+    .cart__nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .cart__text{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 167.5%;
+    }
+    .cart__link{
+        color: #000;
+    }
+    .cart__button{
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: 0.175em;
+        text-transform: uppercase;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+        margin-bottom: 40px;
+        width: 100%;
+        padding: 14px 0;
+    }
+    .cart__close{
+        cursor: pointer;
+    }
+    .item__nav{
+        width: 71px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .item__btn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    .open{
+        display: flex;
+    }
+    .cart__footer{
+        width: 90%;
+        margin: auto;
+        position: absolute;
+        bottom: 40px;
+        background-color: #fff;
+        z-index: 9999;
+    }
+    .item__close{
+        border: 1px solid #F1F1F1;
+        width: 24px;
+        height: 24px;
+        border-radius: 100%;
+        color: grey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .item__close:hover{
+        border: 1px solid #000;
+    }
+    .cart__btn{
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #000;
+        text-align: center;
+        padding: 10px 0;
+        width: 95%;
+        display: block;
+    }
+    .cart__div--wrapper{
+        text-align: center;
+        padding-top: 150px;
+    }
+</style>
+
+<div class="cart__wrapper">
+    <nav class="cart__nav">
+        <h3>{{ 'general.cart.title' | t }}</h3>
+        <p class="cart__close">{% render 'icon-close' %}</p>
+    </nav>
+    <div class="div__cart">
+
+        <div class="cart__div">
+        </div>
+        <div class="cart__div--wrapper">
+            <h4>{{ 'general.cart.subtitle' | t }}</h4>
+            <a aria-label="link to" class="cart__btn" href="/collections/accessories">{{ 'general.cart.text_link' | t }}</a>
+        </div>
+</div>
+    <div class="cart__footer">
+        <nav class="cart__nav">
+            <h4>{{ 'general.cart.subtotal' | t }}</h4>
+            <h4 class="cart__totalprice">$0.00</h4>
+        </nav>
+        <p class="cart__text">{{ 'general.cart.text' | t }}</p>
+        <p class="cart__text"> {% render 'icon-affirm' %} pay as low as 56/mo <a class="cart__link" href="#">{{ 'general.cart.href_link' | t }}</a></p>
+        <button aria-label="button checkout" class="cart__button">{{ 'general.cart.button_name' | t }}</button>
+    </div>
+</div>
+

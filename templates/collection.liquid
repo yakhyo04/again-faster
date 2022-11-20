@@ -1,0 +1,168 @@
+{{ 'style.collection.master.css' | asset_url | stylesheet_tag }}
+{{ 'style.collection-filter.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .product__all--wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  .active-filters{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .active__filters--div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .active__filters--title{
+    font-size: 22px;
+    color: #3F3C38;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+  .active__filters--span{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .sort-by{
+    border: 1px solid #953300;
+    padding: 5px 25px;
+    background-color: transparent;
+    background-size: 12px 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #3F3C38;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 #000 !important;
+  }
+</style>
+
+<h1 class="product__heading">{{ collection.title }}</h1>
+
+{% section 'lists' %}
+
+<!-- {% render 'search-filter.liquid', results: collection %} -->
+<div class="container">
+<div class="active-filters">
+  <div class="active__filters--div">
+    <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="active-filters__clear">Clear all</a>
+
+    <span class="active__filters--div active__filters--span">
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == "price_range" -%}
+      {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+        <a class="active-filters__remove-filter" href="{{ filter.url_to_remove }}">
+          {%- assign min_value = filter.min_value.value | default: 0 -%}
+          {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+          {{ min_value | money }} - {{ max_value | money }} X
+        </a>
+      {%- endif -%}
+    {%- else -%}
+      {%- for filter_value in filter.active_values -%}
+        <a class="active-filters__remove-filter" href="{{ filter_value.url_to_remove }}">
+          {{ filter.label }}: {{ filter_value.label }} X
+        </a>
+      {%- endfor -%}
+    {%- endif- %}
+  {%- endfor -%}
+</span>
+  </div>
+
+  <div class="active__filters--div">
+    <p class="active__filters--title">Sort By: </p>
+    <select class="sort-by" id="sort-by">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+  
+      {% for option in collection.sort_options %}
+        <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div class="product__all--wrapper">
+
+<div>
+  {% render 'collection-filters.liquid', results: collection %}
+</div>
+
+<div class="product__list">
+  
+  {% for product in collection.products %}
+
+    {% if product.available %}
+
+    <div class="product__item">
+      <span class="product__span">
+      {% for tag in product.tags %}
+        {% if tag == 'Best Seller' %}
+          <span class="product__bestseller">Best Seller</span>
+        {% elsif tag == 'Free Shipping' %}
+          <span class="product__freeshipping">Free Shipping</span>
+        {% elsif tag == 'Pre-Order' %}
+          <span class="product__preorder">Pre-Order</span>
+        {% elsif tag == 'SALE' %}
+          <span class="product__sale">Sale</span>
+        {% endif %}
+      {% endfor %}
+    </span>
+      <a href="{{ product.url }}">
+        <img class="product__image" src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+      </a>
+      <a class="product__title h5" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+      {% render 'stars' %}
+      <h5 class="product__money" >{{ product.price | money }}</h5>
+    </div>
+
+    {% else %}
+
+      <div class="product__item product__item--available">
+        <a href="{{ product.url }}">
+          <img class="product__image product__image--blur" src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+        </a>
+        <a class="product__title h5" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+        <span class="product__item--available--span">Sold Out - Get notified when back in stock</span>
+        {% render 'stars' %}
+        <h5 class="product__money" >{{ product.price | money }}</h5>
+      </div>
+
+      {% endif %}
+  {% endfor %}
+</div>
+
+</div>
+</div>
+
+<script>
+  Shopify.queryParams = {};
+
+// Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+// Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function(e) {
+    var value = e.target.value;
+
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+</script>

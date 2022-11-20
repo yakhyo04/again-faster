@@ -1,0 +1,14 @@
+{{ 'style.collection.master.css' | asset_url | stylesheet_tag }}
+
+{% section 'collection-hero' %}
+
+<div class="collection__list">
+    {% assign selected_handles = collection.metafields.accentuate.collections_grid | split: '|' %}
+        {% for collection in selected_handles %}
+            <div class="collection__item">
+                <img class="collection__item--image" src="{{ collections[collection].image | img_url: 'large' }}" alt="">
+                <a href="{{ collections[collection].url }}" class="collection__item--title">{{ collections[collection].title }}</a>
+                <img class="collection__icon" src="{{ '../assets/icon.right.svg' | asset_url }}" alt="">
+            </div>
+        {% endfor %}
+</div>

@@ -1,0 +1,45 @@
+<h1>Customer</h1>
+
+<script>
+  const ACCESS_TOKEN = 'a9dc7abb4344585a2fec6882ddc4f330';
+  const URL = 'https://again-faster-yakhyo.myshopify.com/api/2020-07/graphql.json'
+
+  const GRAPHQL_BODY = (query) => {
+    return{
+      'crossDomain': true,
+      'method': 'POST',
+      'headers': {
+        "X-Shopify-Storefront-Access-Token": ACCESS_TOKEN,
+        "Content-Type": "application/graphql"
+      },
+      'body': query()
+    }
+  }
+
+  async function fetchApi(query){
+    return await fetch(URL ,GRAPHQL_BODY(query)).then((res) => res.json())
+  }
+
+  document.addEventListener('DOMContentLoaded', createCustomer());
+  function createCustomer(){
+    const customerQuery = () => `
+    mutation customerCreate($input: CustomerCreateInput!) {
+  customerCreate(input: $input) {
+    customerUserErrors {
+      code
+      field
+      message
+    }
+    customer {
+      id
+    }
+  }
+  input{
+    email: "yahyo@gmail.com",
+    password: "1234f"
+  }
+}
+    `
+    fetchApi(customerQuery).then((res) => console.log(res))
+  }
+</script>

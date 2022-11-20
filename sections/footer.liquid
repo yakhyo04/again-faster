@@ -1,0 +1,131 @@
+{{ 'style.footer.css' | asset_url | stylesheet_tag }}
+
+<style>
+    .footer{
+        background-image: url({{section.settings.footer__image.src | img_url: '449x'}});
+    }
+    .footer__submit{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        display: none;
+    }
+    .footer__input{
+        width: 100% !important;
+    }
+    .footer__form--button{
+        border: none;
+        cursor: pointer;
+    }
+    .footer__customer__form{
+        width: 460px;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="footer">
+    <div class="footer__menu">
+        <div class="footer__form">
+            <h4 class="footer__form--title">{{ section.settings.footer_title }}</h4>
+            <div class="footer__input--div">
+                    {% form 'customer' %}
+                        <div class="footer__customer__form">
+                            <div>
+                                <input name="contact[tags]" type="hidden" value="newsletter" />
+                                <input class="footer__input news-letter__form-input" placeholder="Enter your email" type="email" name="contact[email]" />
+                            </div>
+                            <div>
+                                <button aria-label="button send email" class="footer__form--button" type="submit">
+                                    <img class="footer__input--icon" width="25px" height="16px" src="{{ '../assets/icon.right.svg' | asset_url }}" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    {% endform %}
+                <!-- </div> -->
+                
+            </div>
+            <div class="footer__logos">
+                <img class="footer__logo" width="16px" height="16px" src="{{ '../assets/icon.facebook.svg' | asset_url }}" alt="facebook">
+                <img class="footer__logo" width="16px" height="16px" src="{{ '../assets/icon.instagram.svg' | asset_url }}" alt="instagram">
+                <img class="footer__logo" width="16px" height="16px" src="{{ '../assets/icon.mail.svg' | asset_url }}" alt="mail">
+            </div>
+        </div>
+        <div class="footer__item--wrapper">
+            <h3 class="footer__item--title">{{ section.settings.footer_text }}</h3>
+            <ul class="footer__list">
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">{{ 'general.footer.about_us' | t }}</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">{{ 'general.footer.blog' | t }}</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Gift Cards</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Military/LEO Discount</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" aria-label="footer link" href="/">Financing</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" aria-label="footer link" href="/">Retail Store</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer__item--wrapper">
+            <h3 class="footer__item--title">{{ section.settings.footer_subtitle }}</h3>
+            <ul class="footer__list">
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Introductions</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Shipping</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Returns and Warranty</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Contact Us</a>
+                </li>
+                <li class="footer__item">
+                    <a aria-label="footer link" class="footer__link" href="/">Shop in Store</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <p class="footer__description">©2020 Again Faster. All Rights Reserved</p>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Footer",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "footer__image",
+                "label": "Footer Image"
+            },
+            {
+                "type": "text",
+                "id": "footer_title",
+                "label": "Footer Title",
+                "default": "Newsletter"
+            },
+            {
+                "type": "text",
+                "id": "footer_text",
+                "label": "Footer Text",
+                "default": "Again Faster"
+            },
+            {
+                "type": "text",
+                "id": "footer_subtitle",
+                "label": "Footer Subtitle",
+                "default": "Get help"
+            }
+        ]
+    }
+{% endschema %}

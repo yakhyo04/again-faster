@@ -1,0 +1,20 @@
+
+<div>
+    {% for collection in section.settings.collection_list %}
+      <img src="{{ collection.image.src | img_url: 'small' }}" alt="">
+    {% endfor %}
+  </div>
+  
+  
+  {% schema %}
+    {
+      "name": "Collection List",
+      "settings": [
+      {
+        "type": "collection_list",
+        "id": "collection_list",
+        "label": "Collection List"
+      }
+      ]
+    }
+  {% endschema %}

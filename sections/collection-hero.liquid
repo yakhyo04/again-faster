@@ -1,0 +1,18 @@
+{{ 'style.collection.hero.css' | asset_url | stylesheet_tag }}
+
+ 
+<div class="collection__wrapper">
+    <div class="collection__richtext--wrapper">
+        <p class="richtext--label">{{ collection.metafields.accentuate.eyebrow | newline_to_br }}</p>
+        <h3 class="richtext--title">{{ collection.metafields.accentuate.title }}</h3>
+        {% render 'button' title: collection.metafields.accentuate.cta_label, link: collection.metafields.accentuate.cta_url  %}
+    </div>
+    <div class="collection__banner--wrapper">
+        {% for image in collection.metafields.accentuate.image_1 %}
+        <img class="collection__banner" width="570px" height="790px" src="{{ image.src }}" alt="">
+        {% endfor %}
+        {% for image in collection.metafields.accentuate.image_2 %}
+        <img class="collection__image" width="304px" height="359px" src="{{ image.src }}" alt="">
+        {% endfor %}
+    </div>
+</div>

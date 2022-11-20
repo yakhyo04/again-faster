@@ -1,0 +1,8 @@
+
+{% for collection in collections %}
+    <a href="{{ collection.url }}">
+      <img src="{{ collection.featured_image.src | img_url: 'large' }}" alt="">
+      <p>{{ collection.title }}</p>
+    </a>
+  {% endfor %}
+

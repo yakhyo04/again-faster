@@ -1,0 +1,62 @@
+<!-- /templates/customers/account.liquid -->
+<style>
+  .account__text{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 167.5%;
+    margin-top: 16px;
+  }
+  #customer_orders{
+    width: 368px;
+    background: #FBFBFB;
+    padding: 10px 162px 30px 34px;
+    margin: 50px 0;
+    font-family: 'Open Sans';
+  }
+  .logout{
+    color: blue;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+  }
+</style>
+
+
+<!-- <h2>Address</h2> -->
+
+<!-- Begin Recharge code -->
+<p><a href="/tools/recurring/login/">{{ 'general.account.heading' | t }}</a></p>
+<!-- End Recharge code -->
+<div id="customer_orders">
+  <h2>{{ 'general.account.title' | t }}</h2>
+  
+  <h4 class="account__text">{{ 'general.account.subtitle' | t }}</h4>
+  <p>{{ 'general.account.id' | t }} <span>{{ customer.id }}</span></p>
+  <p>{{ 'general.account.firstName' | t }} <span>{{ customer.first_name }}</span></p>
+  <p>{{ 'general.account.lastName' | t }} <span>{{ customer.last_name }}</span></p>
+  <p>{{ 'general.account.email' | t }} <span>{{ customer.email }}</span></p>
+
+  <h4 class="account__text">{{ 'general.account.address' | t }}</h4>
+  {% if customer.default_address %}
+  <p>{{ customer.default_address.address1 }}</p>
+  {% if customer.default_address.address2 != "" %}
+    <p>{{ customer.default_address.address2 }}</p>
+  {% endif %}
+  <p>{{ customer.default_address.city}} {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</p>
+  <p>{{ customer.default_address.zip }}</p>
+  <p>{{ customer.default_address.phone }}</p>
+{% endif %}
+  
+  <h4 class="account__text">{{ 'general.account.order_details' | t }} </h4>
+  {% paginate customer.orders by 10 %}
+  {% if customer.orders.size != 0 %}
+    {% for order in customer.orders %}
+    {% endfor %}
+  {% else %}
+    <p>{{ 'general.account.text' | t }}</p>
+  {% endif %}
+  {{ paginate | default_pagination }}
+  {% endpaginate %}
+
+  <a href="/account/logout/" class="logout">{{ 'general.account.logout' | t }}</a>
+</div>

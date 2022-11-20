@@ -1,0 +1,110 @@
+{
+  "general": {
+    "404": {
+      "title": "Not found",
+      "subtext_html": "The page you were looking for does not exist"
+    },
+    "cart": {
+      "title": "My Cart",
+      "subtitle": "Your Cart is Empty",
+      "text_link": "Shop Best Sellers",
+      "subtotal": "Subtotal",
+      "text": "Tax and shipping calculates at checkout.",
+      "href_link": "Learn More",
+      "button_name": "Continue to Checkout"
+    },
+    "footer": {
+      "description": "©2020 Again Faster. All Rights Reserved",
+      "about_us": "About Us",
+      "blog": "Blog",
+      "gift_cards": "Gift Cards",
+      "military_discount": "Military/LEO Discount",
+      "financing": "Financing",
+      "retail_store": "Retail Store",
+      "introductions": "Introductions",
+      "shipping": "Shipping",
+      "returns_warranty": "Returns and Warranty",
+      "contact_us": "Contact Us",
+      "shop_store": "Shop in Store"
+    },
+    "pdp": {
+      "onetime_option": "One-Time Option",
+      "subscribe_text": "Subscribe & Save",
+      "recharge_text": "Choose fewer shipments and we pass along the savings to you.",
+      "recharge_title": "Select your delivery option?",
+      "product_label": "Available for Free shipping!",
+      "product_cta": "Add to cart",
+      "fbw_text": "Frequently bought with"
+    },
+    "tags": {
+      "best_seller": "Best Seller",
+      "free_shipping": "Free Shipping",
+      "pre_order": "Pre-Order",
+      "sale": "Sale"
+    },
+    "account": {
+      "heading": "Manage Subscriptions",
+      "title": "My account",
+      "subtitle": "Account Overview:",
+      "id": "Id:",
+      "firstName": "First Name:",
+      "lastName": "Last Name:",
+      "email": "Email:",
+      "address": "Address Book:",
+      "order_details": "Order Details:",
+      "text": "You haven't placed any orders yet.",
+      "logout": "Logout"
+    },
+    "activate_account": {
+      "password_label": "Password",
+      "confirmation_label": "Password Confirmation",
+      "or": "or"
+    },
+    "login": {
+      "title": "Login",
+      "email_label": "Email Address",
+      "password_label": "Password",
+      "forgot_password": "Forgot password?",
+      "account_label": "Don’t have an account yet?",
+      "reset_label": "Reset Password",
+      "description": "Enter your email below to receive an email to reset your password.",
+      "email": "Email",
+      "cancel": "Cancel",
+      "or": "or"
+    },
+    "address": {
+      "title": "New Address",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "company": "Company",
+      "address_1": "Address 1",
+      "address_2": "Address 2",
+      "city": "City",
+      "country": "Country",
+      "province": "Province",
+      "zip_code": "Zip/Post Code",
+      "number": "Phone Number"
+    },
+    "order": {
+      "title": "Billing Address",
+      "payment": "Payment Status:",
+      "title_2": "Shipping Address",
+      "status": "Fulfillment Status:",
+      "title_3": "Order Items"
+    },
+    "register": {
+      "title": "Create an Account",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirm": "Confirm Password",
+      "text": "Already have an account?"
+    },
+    "reset_password": {
+      "title": "Reset Password",
+      "password": "Password",
+      "confirmation": "password_confirmation"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<!-- /templates/customers/addresses.liquid -->
+
+<h2>{{ 'general.address.title' | t }}</h2>
+{% form 'customer_address', customer.new_address %}
+
+{{ form.errors | default_errors }}
+
+<label for="first_name">{{ 'general.address.firstName' | t }}</label>
+<input type="text" value="" name="address[first_name]" size="30" />
+
+<label for="last_name">{{ 'general.address.lastName' | t }}</label>
+<input type="text" value="" name="address[last_name]" size="30" />
+
+<label for="company">{{ 'general.address.company' | t }}</label>
+<input type="text" value="" name="address[company]" />
+
+<label for="address1">{{ 'general.address.address_1' | t }}</label>
+<input type="text" value="" name="address[address1]" />
+
+<label for="address2">{{ 'general.address.address_2' | t }}</label>
+<input type="text" value="" name="address[address2]" />
+
+<label for="city">{{ 'general.address.city' | t }}</label>
+<input type="text" value="" name="address[city]" />
+
+<!-- See docs for @shopify/theme-addresses to support Country and Province -->
+<label for="country">{{ 'general.address.country' | t }}</label>
+<select name="address[country]" /></select>
+
+<label for="province">{{ 'general.address.province' | t }}</label>
+<select name="address[province]" /></select>
+
+<label for="zip">{{ 'general.address.zip_code' | t }}</label>
+<input type="text" value="" name="address[zip]" />
+
+<label for="phone">{{ 'general.address.number' | t }}</label>
+<input type="tel" value="" name="address[phone]" />
+
+{% endform %}

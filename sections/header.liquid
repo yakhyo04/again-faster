@@ -1,0 +1,60 @@
+{{ 'style.header.css' | asset_url | stylesheet_tag }}
+
+<header class="header"> 
+    <nav class="header__nav">
+        <a aria-label="header nav" href="/">
+            {% if template == 'index' %}
+                <img class="header__image" width="200px" height="19px" src="{{ section.settings.logo.src | img_url: 'large'  }}" alt="{{ section.settings.logo.alt }}">
+            {% else %}
+                <img class="header__image" width="200px" height="19px" src="{{ section.settings.logo_black.src | img_url: 'large'  }}" alt="{{ section.settings.logo_black.alt }}">
+            {% endif %}
+        </a>
+            
+        <ul class="header__list">
+            {% for link in linklists.home-menu.links %}
+                <li class="header__item">
+                    <a aria-label="header item" class="header__link" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <ul class="header__logos">
+            <li class="header__logo">
+                <a aria-label="header link to" href="/" class="header__link header__logo--image">
+                    {% render 'icon-search' %}
+                </a>
+            </li>
+            <li class="header__logo">
+                <a aria-label="header link to" href="/account" class="header__link header__logo--image">
+                    {% render 'icon-profile' %}
+                </a>
+            </li>
+            <li class="header__logo">
+                <a aria-label="header link to" class="header__link header__logo--image header__cart">
+                    {% render 'icon-cart' %}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+{% schema %}
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_black",
+                "label": "Logo Black"
+            }
+        ],
+        "blocks": []
+    }
+{% endschema %}
+

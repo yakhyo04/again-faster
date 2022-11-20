@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "about": {
+      "type": "about",
+      "settings": {
+      }
+    },
+    "homepage": {
+      "type": "homepage",
+      "settings":{
+      }
+    },
+    "slider": {
+      "type": "slider",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "homepage",
+    "slider",
+    "about"
+  ]
+}

@@ -1,0 +1,308 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
+<style>
+    .product__wrapper{
+      display: flex;
+      margin: 50px 0 0 0;
+      font-family: 'Open Sans';
+      position: relative;
+    }
+    .product__div{
+      width: 50%;
+    }
+    .product__div--wrapper{
+      width: 442px;
+      margin: 0 auto;
+    }
+    .product__stars{
+      display: flex;
+      align-items: center;  
+    }
+    .product__price{
+      margin: 8px 0;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 167.5%;
+    }
+    .product__title{
+      margin-bottom: 0;
+    }
+    .product__span{
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 167.5%;
+    }
+    .product__description{
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 167.5%;
+      margin: 24px 0 16px 0;
+    }
+    .variant__cards{
+      height: 130px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      /* grid-template-rows: 1fr; */
+      overflow-y: auto;
+      grid-gap: 8px;
+    }
+    .variant{
+      padding: 16px 0;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 167.5%;
+      text-align: center;
+      border: 1px solid #F1F1F1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .variant:hover{
+      border: 1px solid #000;
+    }
+    .disabled{
+      padding: 16px 0;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 167.5%;
+      text-align: center;
+      text-decoration-line: line-through;
+      color: #C4C4C4;
+      border: 1px solid #F1F1F1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .product__label{
+      font-weight: 400;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 167.5%;
+      color: #979797;
+      margin: 16px 0 24px 0;
+    }
+    .product__button{
+      width: 100%;
+      padding: 14px 0;
+      border: 1px solid black;
+      background-color: black;
+      color: #fff;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.175em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .product__button:hover{
+      background-color: transparent;
+      color: black;
+    }
+    .product__list{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+    }
+    .product__item{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product__item--image{
+      width: 98px;
+      height: 125px;
+    }
+    .product__item--title{
+      text-transform: capitalize;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 167.5%;
+      margin: 0;
+    }
+    .product__item--link{
+      color: #000;
+      margin: 0;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 167.5%;
+    }
+    .variant-radio{
+      display: none;
+    }
+    .variant-radio:checked ~ .variant{
+      /* opacity: 1; */
+      border: 1px solid #000;
+    }
+    .recharge-frequency-option{
+      display: none;
+    }
+    .recharge-frequency-label,
+    .recharge__label{
+      width: 100%;
+      padding: 12px 10px; 
+    }
+    .recharge-frequency-text{
+      width: 100%;
+      padding: 12px 10px; 
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: capitalize;
+      cursor: pointer;
+      border-radius: 5px;
+      color: #5d5d5d;
+      border: 1px solid #5d5d5d;
+    }
+    .recharge-frequency-option:checked ~ .recharge-frequency-text{
+      background-color: #0075FF;
+      border: 1px solid #0075FF;
+      color: #fff;
+    }
+    .recharge__frequency--div,
+    .recharge__div{
+      display: flex;
+      gap: 10px;
+    }
+    .recharge-text{
+      width: 100%;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: capitalize;
+      color: #5d5d5d;
+      cursor: pointer;
+      padding: 12px 10px;
+      position: relative;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #5d5d5d;
+      justify-content: center;
+    }
+    .recharge-option{
+      position: absolute;
+      margin-top: 15px;
+      margin-left: 15px;
+    }
+    .recharge-option:checked ~ .recharge-text{
+      background-color: #3F9BC91A;
+    }
+    .recharge__text{
+      color: #5d5d5d;
+      font-size: 14px;
+      margin: 8px 0;
+    }
+    .recharge__title{
+      margin: 0;
+      text-transform: capitalize;
+      color: #5d5d5d;
+    }
+    /* #3F9BC91A */
+  </style>
+
+      <div class="product__div--wrapper">
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" data-id="{{ product.selling_plan_groups.size }}" >
+            <h3 class="product__title">{{ product.title }}</h3>
+            <p class="product__price">{{ current_variant.price | money }}</p>
+            <div class="product__stars">
+              {% render 'stars' %}
+            </div>
+            <div>
+              {% render 'icon-affirm' %}
+              <span class="product__span">pay as low as 56/mo Learn More</span>
+            </div>
+          <p class="product__description">{{ product.description }}</p>
+          <div class="variant__cards">
+          {% for variant in product.variants %}
+          {% if variant.available %}
+            {% assign pricee = variant.price %}
+              <div onclick="badgeContainer({{ pricee }})" class="variant__card" value="{{ variant.id }}">
+                <input 
+                  class="variant-radio"
+                  type="radio" 
+                  name="size"
+                  id="{{variant.title}}"
+                  {% if variant == product.selected_or_first_available_variant %} checked {% endif %}
+                  {% if variant.inventory_quantity==0  %} disabled {% endif %} 
+                  value="{{ variant.id }}"
+                  />  
+                <label 
+                  onclick="badgeContainer()"
+                  id="{{ variant.id }}"
+                  data-variantId="{{ variant.id }}" 
+                  data-variantPrice="{% if variant.inventory_quantity != 0 %} {{pricee}} {% endif %}" 
+                  for="{{variant.title}}" 
+                  class="variant 
+                  {% if variant.inventory_quantity==0  %} disabled {% endif %}"
+                >
+                    {{variant.title}}
+                </label>
+              </div>
+              {% else %}
+              <div disabled="disabled" class="disabled">
+                {{ variant.title }}
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <script>
+              console.log({{ product | json }})
+            </script>
+            {% if product.selling_plan_groups.size >= 1 %}
+            <div class="recharge__div">
+              <label class="recharge__onetime recharge__label">
+                <input checked type="radio" class="recharge-option" name="one" value="{{ product.selected_or_first_available_variant.id }}">
+                <span class="recharge-text">{{ 'general.pdp.onetime_option' | t }}</span>
+              </label>
+              <label class="recharge__checked recharge__label">
+                {%- assign new_price = product.variants[0].selling_plan_allocations[0].price | money -%}
+                <input type="radio" id="subscribe" class="recharge-option" name="one" value="subscribe">
+                <span class="recharge-text">{{ 'general.pdp.subscribe_text' | t }} <span class="subscribe-price">{{ new_price }}</span></span>
+              </label>
+            </div> 
+            <div class="recharge-frequency" hidden>
+              <p class="recharge__text">{{ 'general.pdp.recharge_text' | t }}</p>
+              <h4 class="recharge__title">{{ 'general.pdp.recharge_title' | t }}</h4>
+              <div class="recharge__frequency--div">
+              {% for item in product.selling_plan_groups[0].selling_plans %}
+              <script>
+                console.log({{ product.selling_plan_groups[0].selling_plans | json }})
+              </script>
+              <label class="recharge-frequency-label" >
+                <input {% if forloop.index == 1 %} checked {% endif %} type="radio" class="recharge-frequency-option" name="freq" id="{{ product.selected_or_first_available_variant.id }}" value="{{ item.id }}">
+                <span class="recharge-frequency-text">{{ item.name | remove: 'Delivery every' }}</span>
+              </label>
+              {% endfor %}
+            </div>
+            </div>
+            {% else %}
+              <h2>''</h2>
+            {% endif %}
+            <div class="rc-widget-injection-parent"></div>
+            <p class="product__label">{{ 'general.pdp.product_label' | t }}</p>
+        <button aria-label="add to cart" class="product__button" type="submit" name="add" id="AddToCart">{{ 'general.pdp.product_cta' | t }}</button>
+      </form>
+      {% if product.metafields.accentuate.fbp %}
+      <h3>{{ 'general.pdp.fbw_text' | t }}</h3>
+      <div class="product__list">
+        {% assign selected_handles = product.metafields.accentuate.fbp | split: '|' %}
+            {% for product in selected_handles %}
+                <div class="product__item"> 
+                  <img width="98px" height="125px" class="product__item--image" src="{{ all_products[product].featured_image | img_url: 'medium' }}" alt="">
+                  <nav>
+                    <p class="product__item--title">{{ all_products[product].title }}</p>
+                    <a aria-label="links" class="product__item--link" data-id="{{ all_products[product].selected_or_first_available_variant.id }}" href="/">{{ 'general.pdp.product_cta' | t }}</a>
+                  </nav>
+                </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+      </div>

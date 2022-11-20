@@ -1,0 +1,81 @@
+{{ 'style.about.css' | asset_url | stylesheet_tag }}
+
+<div class="about">
+    <div class="about__banner--wrapper">
+        <img 
+        class="about__banner"
+         src="{{ section.settings.about_banner.src | img_url: '1024x827' }}"
+         data-src="{{img_url}}"
+         data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+         data-aspectratio="{{ section.settings.about__banner.aspect_ratio }}"
+         data-sizes="auto"
+         data-parent-fit="cover"
+         alt="{{ section.settings.about_banner.alt | escape }}"
+        >
+    </div>
+    <div class="about__content--wrapper">
+        <img 
+        class="about__content--image"
+         src="{{ section.settings.about_image.src | img_url: '462x628' }}"
+         data-src="{{ img_url }}"
+         data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+         data-aspectratio="{{ section.settings.about_image.aspect_ratio }}"
+         data-sizes="auto"
+         data-parent-fit="cover"
+         alt="{{ section.settings.about_image.alt | escape }}"
+        >
+        <div class="about__content">
+            <p class="about__content--label">{{ section.settings.about_label}}</p>
+            <h3 class="about__content--title">{{ section.settings.about_title }}</h3>
+            <p class="about__content--description">{{ section.settings.about_description }}</p>
+            <a aria-label="link to" class="about__content--cta" href="/{{ section.settings.about_cta_link }}">{{ section.settings.about_cta }}</a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "About",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "about_banner",
+                "label": "About Banner"
+            },
+            {
+                "type": "image_picker",
+                "id": "about_image",
+                "label": "About Image"
+            },
+            {
+                "type": "text",
+                "id": "about_label",
+                "label": "t:sections.about.content_label",
+                "default": "lorem ipsum"
+            },
+            {
+                "type": "text",
+                "id": "about_title",
+                "label": "About Title",
+                "default": "lorem ipsum dolor"
+            },
+            {
+                "type": "text",
+                "id": "about_description",
+                "label": "About Description",
+                "default": "lorem ipsum dolor set amet"
+            },
+            {
+                "type": "text",
+                "id": "about_cta",
+                "label": "About Cta",
+                "default": "link"
+            },
+            {
+                "type": "url",
+                "id": "about_cta_link",
+                "label": "About Cta Link"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,33 @@
+{{ 'style.announcement.css' | asset_url | stylesheet_tag }}
+
+<div class="announcement">
+    {% for announcement in section.blocks %}
+        <a aria-label="link to" class="announcement__link" href="/{{announcement.settings.link}}">{{announcement.settings.text}}</a>
+    {% endfor %}
+</div>
+
+{% schema %}
+    {
+        "name": "Announcement Bar",
+        "max_blocks": 3,
+        "blocks": [
+            {
+                "type": "announcement",
+                "name": "Announcement",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "text",
+                        "default": "Welcome to our store",
+                        "label": "Announcement Label"
+                    },
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Announcement Url"
+                    }
+                ]
+            }
+        ]    
+    }
+{% endschema %}

@@ -1,0 +1,209 @@
+<!-- /templates/customers/login.liquid -->
+
+<style>
+    .login{
+        width: 442px;
+        margin: auto;
+        font-family: "Open Sans";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 100px 0 120px 0;
+    }
+    .login__title{
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 130%;
+        letter-spacing: 0.08em;
+        margin: 0 0 39px 0;
+        text-transform: uppercase;
+    }
+    .login__label{
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 167.5%;
+        display: block;
+        padding-bottom: 8px;
+    }
+    .login__input{
+        width: 100%;
+        border: none;
+        outline: none;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 167.5%;
+    }
+    .login__div{
+        width: 442px;
+        height: 63px;
+        margin-top: 24px;
+        border-bottom: 1px solid #BEBEBE;
+    }
+    .login__div:hover{
+        border-bottom: 1px solid #000;
+    }
+    .input__button,
+    .input__btn{
+        background-color: black;
+        border: 1px solid black;
+        color: #fff;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: 0.175em;
+        text-transform: uppercase;
+        width: 100%;
+        display: block;
+        height: 43px;
+        cursor: pointer;
+    }
+    .input__button:hover{
+        background-color: transparent;
+        color: #000;
+    }
+    .input__btn{
+        width: 442px;
+        background-color: transparent;
+        color: #000;
+    }
+    .input__btn:hover{
+        background-color: #000;
+        color: #fff;
+    }
+    .login__text{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 167.5%;
+        text-align: center;
+        padding: 40px 0 24px 0;
+    }
+    .login__forgot{
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 167.5%;
+        color: #000;
+    }
+    .login__forgot--wrapper{
+        text-align: right;
+        margin: 0;
+        padding-top: 8px;
+    }
+    .login__error{
+        color: red;
+    }
+    .errors ul{
+        list-style-type: none;
+        padding: 0;
+    }
+    .errors li{
+        color: #DA0000;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 167.5%;
+    }
+    .forgot__password{
+        display: none;
+        /* position: absolute;
+        background-color: #fff;
+        padding: 100px;
+        border: 1px solid black; */
+    }
+    .toggler{
+        background-color: grey;
+        overflow: hidden;
+        opacity: 0.7;
+    }
+    .forgot__close{
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        cursor: pointer;
+    }
+    .forgot__text{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 167.5%;
+        text-align: center;
+        padding: 16px 0;
+    }
+    .forgot__link{
+        color: blue;
+    }
+</style>
+
+<div class="login">
+
+<div class="login__none login">
+
+<h2 class="login__title">{{ 'general.login.title' | t }}</h2>
+{% form 'customer_login' %}
+
+
+<div class="login__div">
+    <label class="login__label" for="customer_email">{{ 'general.login.email_label' | t }}</label>
+    <!-- <br> -->
+    <input class="login__input" id="customer_email" placeholder="Email" type="email" name="customer[email]" />
+</div>
+
+
+<div class="login__div">
+    <label class="login__label" for="customer_password">{{ 'general.login.password_label' | t }}</label>
+    <!-- <br> -->
+    <input class="login__input" id="customer_password" placeholder="Password" type="password" name="customer[password]" />
+</div>
+<p class="login__forgot--wrapper">
+    <a class="login__forgot" href="#">{{ 'general.login.forgot_password' | t }}</a>
+</p>
+
+
+
+<p class="login__error">{{ form.errors | default_errors }}</p>
+
+<input class="input__button" type="submit" value="Log In" />
+{% endform %}
+
+
+
+    <form action="/account/register">
+    <p class="login__text">{{ 'general.login.account_label' | t }}</p>
+    <input type="submit" class="input__btn" value="Create an account">
+    </form>
+</div>
+
+    <div class="forgot__password">
+        <h3 style="text-align: center;">{{ 'general.login.reset_label' | t }}</h3>
+        <p class="forgot__text">{{ 'general.login.description' | t }}</p>
+        {% form 'recover_customer_password' %}
+        <div class="login__div">
+            <label class="login__label" for="resetEmail">{{ 'general.login.email' | t }}</label>
+            <input class="login__input" id="resetEmail" placeholder="andy@avexdesigns.com" type="email" name="email" />
+        </div>
+            {{ form.errors | default_errors }}
+            <br>
+            <input class="input__button" type="submit" value="Reset Password" />
+            <p>{{ 'general.login.or' | t }}<a class="forgot__link" href="/account/login">{{ 'general.login.cancel' | t }}</a></p>
+        {% endform %}
+    </div>
+
+</div>
+
+<script>
+    const forgotPassword = document.querySelector('.forgot__password');
+    const loginNone = document.querySelector('.login__none');
+    const loginForgot = document.querySelector('.login__forgot');
+    const body = document.querySelector('#body');
+    const closeBtn = document.querySelector('.forgot__close');
+
+    loginForgot.addEventListener('click', (e) => {
+        loginNone.style.display = 'none';
+        forgotPassword.style.display = 'block';
+        // body.classList.add('toggler');
+    })
+    closeBtn.addEventListener('click', (e) => {
+        forgotPassword.style.display = 'none'
+        body.classList.remove('toggler');
+    })
+</script>

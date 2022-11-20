@@ -1,0 +1,43 @@
+.header{
+    color: #fff;
+    font-family: 'Open Sans';
+    position: absolute;
+    width: 90%;
+    margin: 0 50px;
+}
+.header__image{
+    width: 200px !important;
+    cursor: pointer;
+}
+.header__nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header__list,
+.header__logos{
+    list-style-type: none;
+    display: flex;
+}
+.home .header__link{
+    color: #fff;
+}
+.home .header__logo--image svg path{
+    stroke: #fff;
+}
+.header__logo--image svg path{
+    stroke: #000;
+}
+.header__link{
+    text-decoration: none;
+    color: #000;
+    margin-left: 40px !important;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    letter-spacing: 0.175em;
+    text-transform: uppercase;
+}
+.header__link:first-child{
+    margin-left: 0;
+}

@@ -1,0 +1,583 @@
+<style>
+    .products__wrapper{
+        display: grid;
+        grid-gap: 30px;
+        padding: 100px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .product__image{
+        width: 100%;
+    }
+    .product__button{
+        width: 100%;
+        padding: 10px 30px;
+        background-color: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+    .product__wrapper:hover{
+        cursor: pointer;
+    }
+    .product__cart2{
+        position:fixed;
+        width: 400px;
+        height: 100%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #f7f7f7;
+        overflow: auto;
+        z-index: 999999;
+        display: none;
+    }
+    .product__image--wrapper{
+        width: 150px;
+        /* height: 200px; */
+    }
+    .product__image{
+        width: 100%;
+        height: 100%;
+    }
+    .product__close{
+        font-size: 24px;
+        position: absolute;
+        right: 10%;
+        cursor: pointer;
+    }
+    .product__wrapper2{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .product__button--wrapper{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product__remove{
+      color: grey;
+      border: 1px solid grey;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+</style>
+
+<div class="products__wrapper">
+</div>
+
+<div class="product__cart2">
+    <h3>Cart</h3>
+    <span class="product__close">x</span>
+    <div class="product__cart"></div>
+    <h2>Subtotal: <span class="product__price">0</span></h2>
+    <a href="/cart">Cart</a>
+</div>
+
+<script>
+
+    const STOREFRONT_ACCESS_TOKEN = 'a9dc7abb4344585a2fec6882ddc4f330';
+    const GRAPHQL_URL = 'https://again-faster-yakhyo.myshopify.com/api/2020-07/graphql.json'
+
+    const GRAPHQL_BODY = (query) => {
+          return{
+            'crossDomain': true,
+            'method': 'POST',
+            'headers': {
+                "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN,
+                "Content-Type": "application/graphql"
+            },
+            'body': query()
+          }
+    }
+
+    async function fetchApi(query){
+      return await fetch(GRAPHQL_URL, GRAPHQL_BODY(query)).then((response) => response.json())
+    }
+
+
+    const productsWrapper = document.querySelector('.products__wrapper');
+    
+    async function fetchData(){
+      const productQuery = () => `
+      query {
+          products( first: 30) {
+            edges{
+              node {
+                id
+                handle
+                title
+                featuredImage {
+                  url
+                  altText
+                }
+                priceRange {
+                  maxVariantPrice{
+                    amount
+                  }
+                  minVariantPrice{
+                    amount
+                  }
+                }
+                variants(first: 1){
+                  edges{
+                    node{
+                      title
+                      id
+                  }
+                }
+              }
+            }
+          }  
+        }
+      }
+  `;
+        let data = [];
+        await fetchApi(productQuery).then((res) => data = res)
+            for(let item of data.data.products.edges){
+                let variantId = item?.node?.variants?.edges[0]?.node?.id
+                const product = `
+                    <div class="product__wrapper">
+                        <div>
+                            <img class="product__image" src="${item?.node?.featuredImage?.url}" />
+                        </div>
+                         <h3>${item?.node?.title}</h3>  
+                         <h4>$${item?.node?.priceRange?.maxVariantPrice?.amount}</h4> 
+                         <button onclick="addToCart('${variantId}')" class="product__button">Add to Cart</button>
+                    </div>
+                `
+            productsWrapper.innerHTML += product
+            }
+    }
+
+    fetchData();
+
+    
+
+    document.addEventListener('DOMContentLoaded', createCart());
+      function createCart(){
+        const cartQuery = () => `
+          mutation CreateCart{
+            cartCreate{
+              cart{
+                id
+                checkoutUrl
+              }
+            }
+          }
+        `
+        fetchApi(cartQuery).then((res) => !localStorage.getItem('cartId') && localStorage.setItem('cartId', res?.data?.cartCreate?.cart?.id))
+      }
+
+      async function addToCart(id){
+        const productAddToCart = () => `
+          mutation AddToCart{
+            cartLinesAdd(
+              cartId: "${localStorage.getItem('cartId')}",
+              lines: [{
+                quantity: 1,
+                merchandiseId: "${id}"
+              }]
+            ){
+              cart{
+                lines(first: 100){
+                  edges{
+                    node{
+                      id
+                      quantity
+                      merchandise{
+                        ... on ProductVariant{
+                          product{
+                            title
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        await fetchApi(productAddToCart)
+        renderCartItems()
+      }
+
+      let productPrice = 0;
+      async function renderCartItems(){
+        const renderCartQuery = () => `
+          query{
+            cart(
+              id: "${localStorage.getItem('cartId')}"
+            ){
+              id
+              createdAt
+              updatedAt
+              lines(first: 20){
+                edges{
+                  node{
+                    id
+                    quantity
+                    merchandise{
+                      ... on ProductVariant{
+                        id
+                        title
+                        product{
+                          title
+                        }
+                        price
+                        image{
+                          id
+                          url
+                          altText
+                        }
+                      }
+                    }
+                    attributes{
+                      key
+                      value
+                    }
+                  }
+                }
+              }
+              attributes{
+                key
+                value
+              }
+              buyerIdentity{
+                email
+                phone
+                customer{
+                  id
+                }
+                countryCode
+              }
+            }
+          }
+        `
+
+        const productCart = document.querySelector('.product__cart')
+        const productCart2 = document.querySelector('.product__cart2')
+        productCart2.style.display = 'block'
+        let cartItem = [];
+        let pro = '';
+        await fetchApi(renderCartQuery).then((res) => cartItem = res)
+        for(let item of cartItem.data.cart.lines.edges){
+            productPrice += +item?.node?.merchandise?.price
+            document.querySelector('.product__price').innerText = productPrice > 0 ? productPrice : 0;
+                // let variantId = item?.node?.variants?.edges[0]?.node?.id
+                // console.log("item", item?.node?.featuredImage);
+                pro += `
+                    <div class="product__wrapper2">
+                        <div class="product__image--wrapper">
+                            <img class="product__image" src="${item?.node?.merchandise?.image.url}" />
+                        </div>
+                        <div>
+                          <h3>${item?.node?.merchandise?.product?.title}</h3>  
+                          <h4 class="cart-product__price">$${item?.node?.merchandise?.price}</h4>
+                          <div class="product__button--wrapper">
+                            <button onclick="cartDecrement('${item?.node?.id}', ${item?.node?.quantity})">-</button>
+                            <p>${item?.node?.quantity}</p>
+                            <button onclick="cartUpdate('${item?.node?.id}', ${item?.node?.quantity})">+</button>  
+                          </div>
+                          <p class="product__remove" onclick="removeItemFromCart('${item?.node?.id}')">x</p>
+                        </div>
+                    </div>
+                `
+                productCart.innerHTML = pro
+            }
+      }
+
+      async function cartUpdate(id, quantity){
+        console.log(id, quantity);
+        const cartLinesUpdateQuery = () => `
+      mutation {
+        cartLinesUpdate(
+          cartId: "${localStorage.getItem('cartId')}"
+          lines: {
+            id: "${id}"
+            quantity: ${quantity + 1}
+          }
+        ) {
+          cart {
+            id
+            lines(first: 20) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                      title
+                      product {
+                        title
+                      }
+                      image {
+                        url
+                        altText
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `
+      await fetchApi(cartLinesUpdateQuery)
+      renderCartItems()
+      }
+
+
+      async function cartDecrement(id, quantity){
+        console.log(id, quantity);
+        const cartUpdateQuery = () => `
+      mutation {
+        cartLinesUpdate(
+          cartId: "${localStorage.getItem('cartId')}"
+          lines: {
+            id: "${id}"
+            quantity: ${quantity - 1}
+          }
+        ) {
+          cart {
+            id
+            lines(first: 20) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                      title
+                      product {
+                        title
+                      }
+                      image {
+                        url
+                        altText
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `
+      await fetchApi(cartUpdateQuery)
+      renderCartItems()
+      }
+
+
+      async function removeItemFromCart(cartLineId) {
+  const removeItemFromCartQuery = () => `
+      mutation  {
+        cartLinesRemove(cartId: "${localStorage.getItem('cartId')}", lineIds: "${cartLineId}") {
+          cart {
+            id
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                      title
+                      product {
+                        title
+                        handle
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+  `
+
+  await fetchApi(removeItemFromCartQuery)
+  renderCartItems()
+}
+
+
+
+
+
+
+
+
+
+//     let cartId;
+
+//     function AddtoCart(id){
+//         const productAddToCart = `
+//       mutation {
+//         cartCreate(
+//           input: {
+//             lines: [
+//               {
+//                 quantity: 1
+//                 merchandiseId: "${id}"
+//               }
+//             ]
+//             attributes: { key: "cart_attribute", value: "This is a cart attribute" }
+//           }
+//         ) {
+//     cart {
+//       id
+//       createdAt
+//       updatedAt
+//       lines(first: 10) {
+//         edges {
+//           node {
+//             id
+//             merchandise {
+//               ... on ProductVariant {
+//                 id
+//               }
+//             }
+//           }
+//         }
+//       }
+//       attributes {
+//         key
+//         value
+//       }
+//     }
+//   }
+//       }
+// `
+
+//     productCart.style.display = 'block'
+
+    
+    
+//       fetch(GRAPHQL_URL, {
+//         method: 'POST',
+//         async: true,
+//         crossDomain: true,
+//         headers: {
+//             'X-Shopify-Storefront-Access-Token': STOREFRONT_ACCESS_TOKEN,
+//             'Content-Type': 'application/graphql',
+//         },
+//         body: productAddToCart
+//       })
+//       .then(res => res.json())
+//       .then(data => {
+//         cartId = data.data.cartCreate.cart.id;
+//         getCart(data.data.cartCreate.cart.id)
+//       })
+
+//       getCart()
+//     }
+
+//     let cartProductItem;
+//     const productCart = document.querySelector('.product__cart');
+
+    
+
+
+//     async function getCart(cartID){
+//         await fetch(GRAPHQL_URL, {
+//             method: 'POST',
+//             async: true,
+//             crossDomain: true,
+//             headers: {
+//                 "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN,
+//                 "Content-Type": 'application/graphql',
+//             },
+//             body: `
+//       query {
+//         cart(
+//           id: "${cartID}"
+//         ) {
+//           id
+//           createdAt
+//           updatedAt
+//           lines(first: 10) {
+//             edges {
+//               node {
+//                 id
+//                 quantity
+//                 merchandise {
+//                   ... on ProductVariant {
+//                     id
+//                     title
+//                     price
+//                     image{
+//                         id
+//                         url
+//                     }
+//                   }
+//                 }
+//                 attributes {
+//                   key
+//                   value
+//                 }
+//               }
+//             }
+//           }
+//           attributes {
+//             key
+//             value
+//           }
+          
+//           buyerIdentity {
+//             email
+//             phone
+//             customer {
+//               id
+//             }
+//             countryCode
+//           }
+//         }
+//       }
+// `
+//         })
+//         .then(res => res.json())
+//         .then(data => console.log("data:", cartProductItem = data.data.cart))
+//         console.log(cartProductItem);
+//         renderCartItems();
+//       }
+
+//       getCart()
+
+//       function renderCartItems(){
+//         if(cartId.length >= 1 && cartProductItem){
+//             productCart.innerHTML += `
+//                 <div class="product__wrapper2">
+//                     <div class="product__image--wrapper">
+//                         <img class="product__image" src="${cartProductItem.lines.edges[0].node.merchandise.image.url}" />
+//                     </div>
+//                     <div>
+//                         <h3>${cartProductItem.lines.edges[0].node.merchandise.title}</h3>
+//                         <p>${cartProductItem.lines.edges[0].node.merchandise.price}</p>
+//                         <button>-</button><span>1</span><button>+</button>    
+//                     </div>
+//                 </div>
+//             `
+//         }
+//       }
+
+     
+      
+    //   const productClose = document.querySelector('.product__close');
+
+    //   productClose.addEventListener('click', () =>  {
+    //     productCart.style.display = 'none'
+    //   })
+
+
+</script>

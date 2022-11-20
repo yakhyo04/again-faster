@@ -1,0 +1,52 @@
+
+<style>
+  .product__wrapper{
+    display: flex;
+    margin: 50px 0 0 0;
+    font-family: 'Open Sans';
+    position: relative;
+  }
+  .product__div{
+    width: 50%;
+  }
+</style>
+
+<div class="product__wrapper">
+  <div class="product__div">
+    {% section 'pdp-slider' %}
+  </div>
+  <div class="product__div">
+    {% section 'pdp-hero' %}
+  </div>
+</div>
+
+
+{% section 'cart-section' %}
+
+{% section 'pdp-sections' %}
+
+{% section 'pdp-recomendation' %}
+
+{% section 'yotpo-section' %}
+
+{% section 'pdp-schema' %}
+
+
+<script>
+  const priceofDetails = document.querySelector('.product__price');
+  const badgeContainers = document.querySelector('.variant__card');
+  const form = document.querySelector('#AddToCartForm');
+  
+  const productLink =  document.querySelector('.product__item--link');
+  productLink.addEventListener('click', (e) => {
+    console.log(e.target.dataset.id);
+  })
+  
+  function badgeContainer(pricee){
+    priceofDetails.innerText = `$${String(pricee).slice(0, -2)}.00`
+  }
+
+</script>
+
+{{ 'script.cart.js' | asset_url | script_tag }}
+{{ 'cart.js' | asset_url | script_tag }}

@@ -1,0 +1,54 @@
+{{ 'style.homepage.css' | asset_url | stylesheet_tag }}
+
+<div class="homepage">
+    <div class="homepage__richtext">
+        <h1 class="homepage__richtext--title">{{ section.settings.homepage_title }}</h1>
+        <p class="homepage__richtext--description">{{ section.settings.homepage_description }}</p>
+        <div class="homepage__cta--div">
+            <a aria-label="richtext cta" class="homepage__richtext--cta" href="/">{{ section.settings.homepage_cta }}</a>
+            <img width="17px" height="9px" src="{{ '../assets/toright.svg' | asset_url }}" alt="">
+        </div>
+    </div>
+</div>
+
+<style>
+    .homepage{
+        background-image: url({{section.settings.homepage_image.src | img_url: '1920x'}});
+    }
+</style>
+
+{% schema %}
+    {
+        "name": "Homepage",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "homepage_image",
+                "label": "Homepage Image"
+            },
+            {
+                "type": "text",
+                "id": "homepage_title",
+                "label": "Homepage Title",
+                "default": "Team barbell"
+            },
+            {
+                "type": "text",
+                "id": "homepage_description",
+                "label": "Homepage Description",
+                "default": "Team Barbell was to design a piece of equipment that matches the performance and quality of other elite level competition bars."
+            },
+            {
+                "type": "text",
+                "id": "homepage_cta",
+                "label": "Homepage Cta",
+                "default": "Explore"
+            },
+            {
+                "type": "image_picker",
+                "id": "homepage_cta_icon",
+                "label": "Homepage Cta Icon"
+            }
+        ]
+    }
+{% endschema %}

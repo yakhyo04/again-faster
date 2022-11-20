@@ -1,0 +1,48 @@
+
+<style>
+  .products__wrapper{
+    padding: 0 40px;
+  }
+  .products{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 16px;
+  }
+  .product img{
+    width: 100%;
+  }
+  .products__title{
+    margin: 0;
+  }
+</style>
+
+<div class="products__wrapper">
+  {% if product.metafields.accentuate.you_might_also_like %}
+  <h2>You might also like</h2>
+
+  <div class="products">
+    {% assign selected_handles = product.metafields.accentuate.you_might_also_like | split: '|' %}
+    {% for product in selected_handles %}
+            <div class="product"> 
+              <span class="product__span">
+                {% for tag in product.tags %}
+                  {% if tag == 'Best Seller' %}
+                    <span class="product__bestseller">{{ 'general.tags.best_seller' | t }}</span>
+                  {% elsif tag == 'Free Shipping' %}
+                    <span class="product__freeshipping">{{ 'general.tags.free_shipping' | t }}</span>
+                  {% elsif tag == 'Pre-Order' %}
+                    <span class="product__preorder">{{ 'general.tags.pre_order' | t }}</span>
+                  {% elsif tag == 'SALE' %}
+                    <span class="product__sale">{{ 'general.tags.sale' | t }}</span>
+                  {% endif %}
+                {% endfor %}
+              </span>
+              <img width="auto" height="auto" src="{{ all_products[product].featured_image | img_url: 'large' }}" alt="">
+              <h5 class="products__title">{{ all_products[product].title }}</h5>
+              {% render 'stars' %}  
+            <h5 class="products__title">{{ all_products[product].price | money }}</h5>
+            </div>
+    {% endfor %}
+</div>
+  {% endif %}
+</div>

@@ -1,0 +1,42 @@
+{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css' | stylesheet_tag }}
+{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js' | script_tag }}
+
+<style>
+    .mySwiper {
+      height: 100vh;
+      display: flex;
+    }
+    .swiper__image{
+      object-fit: cover;
+    }
+    :root{
+      --swiper-theme-color: #353535;
+    }
+
+  </style>
+
+<!-- Swiper -->
+
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper swiper__wrapper">
+        {% for item in product.images %}
+      <div class="swiper-slide">
+        <img width="720px" height="900px" class="swiper-slide swiper__image" src="{{ item.src | img_url: '720x900' }}" alt="{{ item.alt | escape }}">
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination product__pagination"></div>
+  </div>
+
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 18,
+      direction: 'vertical',
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      }
+    });
+  </script>

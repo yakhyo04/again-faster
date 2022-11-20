@@ -1,0 +1,14 @@
+{% for block in section.blocks %}
+    {% render block %}
+{% endfor %}
+
+{% schema %}
+{
+  "name": "for apps",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

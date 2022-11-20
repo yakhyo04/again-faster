@@ -1,0 +1,108 @@
+<style>
+    .pdp-sections__wrapper{
+        position: relative;
+    }
+    .pdp__sections{
+        position: relative;
+        font-family: 'Open Sans';
+        color: #fff;
+        background-color: #000;
+    }
+    .pdp-sections{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 80px 0 80px 40px;
+    }
+    .pdp-sections:nth-child(2n+1){
+        padding-left: 80px;
+        padding-right: 40px;
+    }
+    .pdp-sections:first-child{
+        padding: 0 0 0 80px;
+    }
+    .pdp-sections:nth-child(2n){
+        flex-flow: row-reverse;
+    }
+    .pdp-sections__div{
+        width: 50%;
+    }
+    .pdp-sections__image{
+        max-width: 100%;
+        object-fit: cover;
+    }
+    .product__content{
+        width: 600px;
+    }
+    .product__content p{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 167.5%;
+    }
+    .product__content h3{
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 130%;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .product__content ul{
+        list-style-type: none;
+        padding: 0;
+    }
+    .product__content li{
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 167.5%;
+        padding: 8px 0;
+    }
+    .product__content li::before{
+        content: '/';
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 167.5%;
+        color: #C2A578;
+        margin-right: 9px;
+    }
+    .pdp-sections__span,
+    .pdp-sections__span2,
+    .pdp-sections__span3{
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        background-color: #C2A578;
+        left: 25%;
+        opacity: 0.2;
+    }
+    .pdp-sections__span2{
+        left: 50%;
+    }
+    .pdp-sections__span3{
+        left: 75%;
+    }
+</style>
+
+{% assign banner_image = product.metafields.accentuate.banner_image %}
+{% assign banner_text = product.metafields.accentuate.banner_text %}
+
+<div class="pdp__sections">
+<span class="pdp-sections__span"></span>
+<span class="pdp-sections__span2"></span>
+<span class="pdp-sections__span3"></span>
+<div class="pdp-sections__wrapper">
+    {% for item in (1..banner_text.size) %}
+        <div class="pdp-sections">
+            <div class="pdp-sections__div product__content">
+                {% if banner_text[forloop.index0] != blank %}
+                    {{ banner_text[forloop.index0] }}
+                {% endif %}
+            </div>
+            <div class="pdp-sections__div">
+                {% if banner_image[forloop.index0] != blank %}
+                    <img width="100%" height="100%" class="pdp-sections__image" src="{{ banner_image[forloop.index0][0].src }}" alt="">
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>

@@ -1,0 +1,53 @@
+{{ 'style.banner.css' | asset_url | stylesheet_tag }}
+
+<div class="banner">
+    <div class="banner__content">
+        <h3 class="banner__title">{{ section.settings.banner_title }}</h3>
+        <p class="banner__description">{{ section.settings.banner_description }}</p>
+        <div class="banner__cta--wrapper">
+            <a aria-label="link to" class="banner__cta" href="/{{ section.settings.banner_cta_link }}">{{ section.settings.banner_cta }}</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .banner{
+        background-image: url({{section.settings.banner_image | img_url: '1920x'}});
+    }
+</style>
+
+{% schema %}
+    {
+        "name": "Banner",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "banner_image",
+                "label": "Banner Image"
+            },
+            {
+                "type": "text",
+                "id": "banner_title",
+                "label": "Banner Title",
+                "default": "lorem ipsum"
+            },
+            {
+                "type": "text",
+                "id": "banner_description",
+                "label": "Banner Description",
+                "default": "lorem ipsum dolor"
+            },
+            {
+                "type": "text",
+                "id": "banner_cta",
+                "label": "Banner Cta",
+                "default": "link"
+            },
+            {
+                "type": "url",
+                "id": "banner_cta_link",
+                "label": "Banner Cta Link"
+            }
+        ]
+    }
+{% endschema %}
