@@ -1,7 +1,36 @@
 {{ 'style.header.css' | asset_url | stylesheet_tag }}
 
 <header class="header"> 
+    <div class="header__container">
     <nav class="header__nav">
+        <span class="header__burger">
+            {% if template == 'index' %}
+                {% render 'icon-burger' %}
+            {% else %}
+                {% render 'icon-burger-black' %}
+            {% endif %}
+        </span>
+
+        <!-- Displan none submenu -->
+        <div class="header__submenu">
+            <span class="header__submenu--closeIcon">
+                {% render 'icon-close' %}
+            </span>
+            <div class="header__search--wrapper">
+                <input type="text" placeholder="Search">
+                {% render 'icon-black-search' %}
+            </div>
+            {% for link in linklists.home-menu.links %}
+            <div class="header__submenu--wrapper">
+                <a aria-label="header_link" class="header__submenu--link"  href="{{ link.url }}">{{ link.title }}</a>
+                {% render 'icon-right-arrow' %}
+            </div>
+            {% endfor %}
+            <a class="header__bottom--profile" href="/account">
+                {% render 'icon-black-profile' %} Account
+            </a>
+        </div>
+
         <a aria-label="header nav" href="/">
             {% if template == 'index' %}
                 <img class="header__image" width="200px" height="19px" src="{{ section.settings.logo.src | img_url: 'large'  }}" alt="{{ section.settings.logo.alt }}">
@@ -19,12 +48,12 @@
         </ul>
 
         <ul class="header__logos">
-            <li class="header__logo">
+            <li class="header__logo header__search">
                 <a aria-label="header link to" href="/" class="header__link header__logo--image">
                     {% render 'icon-search' %}
                 </a>
             </li>
-            <li class="header__logo">
+            <li class="header__logo header__profile">
                 <a aria-label="header link to" href="/account" class="header__link header__logo--image">
                     {% render 'icon-profile' %}
                 </a>
@@ -36,8 +65,20 @@
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 
+<script>
+    const headerBurger = document.querySelector('.header__burger');
+    const headerSubMenu = document.querySelector('.header__submenu');
+    const headerCloseIcon = document.querySelector('.header__submenu--closeIcon');
+    headerBurger.addEventListener('click', (e) => {
+        headerSubMenu.style.display = 'block'
+    })
+    headerCloseIcon.addEventListener('click', (e) => {
+        headerSubMenu.style.display = 'none'
+    })
+</script>
 
 {% schema %}
     {
