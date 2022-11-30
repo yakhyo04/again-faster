@@ -1,0 +1,85 @@
+{{ 'style.featured.css' | asset_url | stylesheet_tag }}
+{{ "https://unpkg.com/swiper/swiper-bundle.min.css" | stylesheet_tag }}
+{{ "https://unpkg.com/swiper/swiper-bundle.min.js" | script_tag }}
+
+<div class="featured">
+  <div class="swiper container">
+    <div class="swiper-wrapper featured__slider__container">
+      {% for block in section.blocks %}
+      <div class="swiper-slide featured__product__blog">
+        <a href="{{ block.settings.collection.url | within: collection }}">
+          <img
+            class="featured__product__img"
+            src="{{ block.settings.collection.featured_image.src | img_url: 'large' }}"
+            alt="{{ block.settings.collection.featured_image.alt | escape }}"
+          />
+        </a>
+        <div class="featured__product-name">
+          <a
+          class="featured__product__link"
+          href="{{ block.settings.collection.url | within: collection }}"
+          >{{ block.settings.collection.title }}
+          </a>
+        <i>
+          {% render "arrow-right" %}
+        </i>
+        </div>
+        
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-scrollbar"></div>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper(".swiper", {
+    slidesPerView: 1,
+    scrollbar: {
+      el: ".swiper-scrollbar",
+      hide: true,
+      dragSize: 215
+    },
+    breakpoints: {
+          250: {
+            slidesPerView: 2,
+            // spaceBetween: 20,
+          },
+          450: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 4,
+            // spaceBetween: 40,
+          }
+          
+        }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "collections",
+  "class": "collections",
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Sliders",
+      "name":"Collections Slider"
+    }
+  ]
+}
+{% endschema %}

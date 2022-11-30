@@ -1,36 +1,18 @@
 {{ 'style.slider.css' | asset_url | stylesheet_tag }}
-{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css' | stylesheet_tag }}
-{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js' | script_tag }}
+
 
 <!-- Swiper -->
 <div class="swiper mySwiper slider">
   <div class="swiper-wrapper slider__wrapper">
-    {% for collection in section.settings.lists %}
+    {% for coll in section.settings.lists %}
       <div class="swiper-slide">
-        <img width="328px" height="auto" src="{{ collection.image.src | img_url: '328x' }}" alt="{{ collection.image.alt | escape }}">
-        <h3 class="slider__title">{{ collection.title }}</h3>
+        <img width="328px" height="auto" src="{{ coll.image.src | img_url: '328x' }}" alt="{{ coll.image.alt | escape }}">
+        <a href="{{ coll.url }}" class="slider__title">{{ coll.title }}</a>
       </div>
     {% endfor %}
     </div>
   <div class="swiper-scrollbar slider__scrollbar"></div>
 </div>
-
-
-<script>
-  var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 4,
-    spaceBetween: 18,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    scrollbar: {
-      el: ".swiper-scrollbar",
-      hide: true,
-    },
-  });
-</script>
-
 
 {% schema %}
   {
@@ -44,3 +26,40 @@
     ]
   }
 {% endschema %}
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 4,
+    spaceBetween: 18,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    scrollbar: {
+      el: ".swiper-scrollbar",
+      hide: true,
+    },
+    breakpoints: {
+    500:{
+      slidesPerView: 2,
+      spaceBetween: 0
+    },
+    768:{
+      slidesPerView: 2,
+      spaceBetween: 0
+    },
+    900: {
+      slidesPerView: 3,
+      spaceBetween: 0,
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 0
+    }
+  }
+
+  });
+</script>
+
+{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css' | stylesheet_tag }}
+{{ 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js' | script_tag }}

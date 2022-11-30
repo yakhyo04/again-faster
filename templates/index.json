@@ -1,24 +1,22 @@
 {
   "sections": {
-    "about": {
-      "type": "about",
-      "settings": {
-      }
-    },
     "homepage": {
       "type": "homepage",
       "settings":{
       }
     },
-    "slider": {
-      "type": "slider",
+    "featured": {
+      "type": "featured"
+    },
+    "about": {
+      "type": "about",
       "settings": {
       }
     }
   },
   "order": [
     "homepage",
-    "slider",
+    "featured",
     "about"
   ]
 }
