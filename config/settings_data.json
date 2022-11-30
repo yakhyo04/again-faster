@@ -1,6 +1,46 @@
 {
-  "current": "Default",
+  "current": {
+    "sections": {
+      "announcement": {
+        "type": "announcement",
+        "blocks": {
+          "398c95c2-ea9e-445c-99c9-3e46b02653d6": {
+            "type": "announcement",
+            "settings": {
+              "text": "Welcome to our store",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "398c95c2-ea9e-445c-99c9-3e46b02653d6"
+        ],
+        "settings": {
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify:\/\/shop_images\/logoimg.png",
+          "logo_black": "shopify:\/\/shop_images\/logo-black.png"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer__image": "shopify:\/\/shop_images\/bg-logo.png",
+          "footer_title": "Newsletter",
+          "footer_text": "Again Faster",
+          "footer_subtitle": "Get help"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
   "presets": {
-    "Default": { }
+    "Default": {
+    }
   }
 }
