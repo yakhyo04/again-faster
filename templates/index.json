@@ -1,18 +1,37 @@
 {
   "sections": {
-    "about": {
-      "type": "about",
-      "settings": {
-      }
-    },
     "homepage": {
       "type": "homepage",
-      "settings":{
+      "settings": {
+        "homepage_image": "shopify:\/\/shop_images\/hero-full_f9af0b2a-3b21-428e-abb0-9fca290c47dd.png",
+        "homepage_title": "Team barbell",
+        "homepage_description": "Team Barbell was to design a piece of equipment that matches the performance and quality of other elite level competition bars.",
+        "homepage_cta": "Explore"
       }
     },
     "slider": {
       "type": "slider",
       "settings": {
+        "lists": [
+          "accessories",
+          "affiliate-outfitting",
+          "barbells",
+          "bumper-plates",
+          "bumper-plates-1",
+          "garage-package"
+        ]
+      }
+    },
+    "about": {
+      "type": "about",
+      "settings": {
+        "about_banner": "shopify:\/\/shop_images\/about_banner_28c8a059-7a45-41be-9847-e7f8e9d46a97.png",
+        "about_image": "shopify:\/\/shop_images\/about_image_fb5a1520-a338-4fba-94a6-93c50413ba27.png",
+        "about_label": "lorem ipsum",
+        "about_title": "lorem ipsum dolor",
+        "about_description": "lorem ipsum dolor set amet",
+        "about_cta": "link",
+        "about_cta_link": ""
       }
     }
   },
