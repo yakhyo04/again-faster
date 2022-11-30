@@ -50,3 +50,23 @@
     justify-content: space-around;
     cursor: pointer;
 }
+
+@media (max-width: 900px){
+    .homepage__richtext{
+        width: 447px;
+        padding: 0px 0px 30px 30px;
+    }
+    .homepage__richtext--title{
+        font-size: 52px;
+    }
+}
+
+@media (max-width: 600px){
+    .homepage__richtext{
+        width: auto;
+        padding: 0px 0px 40px 16px;
+    }
+    .homepage__richtext--title{
+        font-size: 40px;
+    }
+}

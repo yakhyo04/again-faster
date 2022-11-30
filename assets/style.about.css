@@ -1,5 +1,6 @@
 .about{
     display: flex;
+    justify-content: space-between;
     font-family: 'Open Sans';
     padding: 0 86px 120px 0;
 }
@@ -51,4 +52,63 @@
     letter-spacing: 0.175em;
     text-transform: uppercase;
     color: #000;
+}
+
+@media (max-width: 1256px){
+    .about{
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 1160px){
+    .about__banner--wrapper{
+        width: 50%;
+        height: 100%;
+    }
+    .about__banner{
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px){
+    .about__content--wrapper{
+        width: 40%;
+    }
+    .about__content--image{
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px){
+    .about{
+        position: relative;
+        padding-bottom: 200px;
+        padding-right: 10px;
+    }
+    .about__content{
+        width: auto;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 24px 16px 20px 16px;
+    }
+    .about__content--title{
+        font-size: 18px;
+    }
+    .about__content--description{
+        font-size: 12px;
+    }
+    .about__banner--wrapper{
+        width: 60%;
+    }
+    .about__content--wrapper{
+        width: 35%;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 400px){
+    .about{
+        padding-bottom: 270px;
+    }
 }
