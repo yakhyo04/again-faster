@@ -33,6 +33,26 @@
           "footer_text": "Again Faster",
           "footer_subtitle": "Get help"
         }
+      },
+      "collection-hero": {
+        "type": "collection-hero",
+        "settings": {
+        }
+      },
+      "lists": {
+        "type": "lists",
+        "settings": {
+          "lists": [
+            "barbells",
+            "bumper-plates",
+            "squat-stand-racks",
+            "weights",
+            "medicine-balls",
+            "gdc",
+            "jerk-block-set",
+            "accessories"
+          ]
+        }
       }
     },
     "content_for_index": [
