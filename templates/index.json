@@ -15,19 +15,6 @@
     "about": {
       "type": "about",
       "settings": {
-        "lists": [
-          "accessories",
-          "affiliate-outfitting",
-          "barbells",
-          "bumper-plates",
-          "bumper-plates-1",
-          "garage-package"
-        ]
-      }
-    },
-    "about": {
-      "type": "about",
-      "settings": {
         "about_banner": "shopify:\/\/shop_images\/about_banner_28c8a059-7a45-41be-9847-e7f8e9d46a97.png",
         "about_image": "shopify:\/\/shop_images\/about_image_fb5a1520-a338-4fba-94a6-93c50413ba27.png",
         "about_label": "lorem ipsum",
