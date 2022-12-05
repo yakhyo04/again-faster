@@ -10,7 +10,49 @@
       }
     },
     "featured": {
-      "type": "featured"
+      "type": "featured",
+      "blocks": {
+        "f7fddc5d-6dbc-45e3-8a26-f40d538a2171": {
+          "type": "collection",
+          "settings": {
+            "collection": "affiliate-outfitting"
+          }
+        },
+        "d9e7d1b6-5588-4aaf-bc50-3896e3ccc0f7": {
+          "type": "collection",
+          "settings": {
+            "collection": "bumper-plates"
+          }
+        },
+        "3916caf3-6477-4566-8f41-c4832b00a8d0": {
+          "type": "collection",
+          "settings": {
+            "collection": "weights"
+          }
+        },
+        "5697924e-d756-457a-b5a3-9ce7836024e1": {
+          "type": "collection",
+          "settings": {
+            "collection": "barbells"
+          }
+        }
+      },
+      "block_order": [
+        "f7fddc5d-6dbc-45e3-8a26-f40d538a2171",
+        "d9e7d1b6-5588-4aaf-bc50-3896e3ccc0f7",
+        "3916caf3-6477-4566-8f41-c4832b00a8d0",
+        "5697924e-d756-457a-b5a3-9ce7836024e1"
+      ],
+      "settings": {
+        "lists": [
+          "accessories",
+          "affiliate-outfitting",
+          "barbells",
+          "bumper-plates",
+          "bumper-plates-1",
+          "garage-package"
+        ]
+      }
     },
     "about": {
       "type": "about",
