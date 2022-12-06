@@ -100,6 +100,10 @@
     padding: 4px 32px;
 }
 .product__heading{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 130%;
+    letter-spacing: 0.08em;
     text-align: center;
     margin: 60px 0 0 0;
 }
@@ -121,11 +125,18 @@
     top: 240px;
     left: 70px;
 }
+.yotpo-sr-bottom-line .yotpo-sr-bottom-line-summary[data-v-549a901e]{
+    display: flex;
+    flex-wrap: wrap !important;
+}
 
 
 @media (max-width: 1150px){
     .collection__list{
         grid-template-columns: repeat(3, 1fr);
+    }
+    .product__list{
+        width: 100%;
     }
 }
 
@@ -135,4 +146,16 @@
         padding: 0 24px;
         grid-gap: 8px;
     }
+    .product__list{
+        grid-template-columns: 1fr 1fr;
+    }
 }
+
+
+@media (max-width: 600px){
+    .product__heading{
+        font-size: 18px;
+    }
+}
+
+/* 944026343 */
