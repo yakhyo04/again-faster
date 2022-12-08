@@ -19,6 +19,7 @@
   }
   .active__filters--div{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
   }
@@ -46,6 +47,15 @@
     align-items: center;
     position: relative;
     box-shadow: 0 0 #000 !important;
+  }
+  @media (max-width: 500px){
+    .active__filters--title{
+      font-size: 16px;
+    }
+    .sort-by{
+      font-size: 14px;
+      padding: 5px 15px;
+    }
   }
 </style>
 
@@ -93,6 +103,8 @@
     </select>
   </div>
 </div>
+
+{% paginate collection.products by 9 %}
 
 <div class="product__all--wrapper">
 
@@ -145,6 +157,24 @@
 </div>
 
 </div>
+
+{% if paginate.pages > 1 %}
+<div class="pagination">
+  <a href="{{ paginate.previous.url }}" class="pagination__link h4 {% if paginate.previous.url %}pagination-active{% endif %}">previous</a>
+  <div class="pagination__content">
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <h3 class="pagination__content--number">{{ part.title | link_to: part.url }}</h3>
+      {% else %}
+        <h3 class="pagination__content--link">{{ part.title }}</h3>
+      {% endif %}
+    {% endfor %}
+  </div>  
+  <a href="{{ paginate.next.url }}" class="pagination__link h4 {% if paginate.next.url %}pagination-active{% endif %}">next</a>
+</div>
+{% endif %}
+{% endpaginate %}
+
 </div>
 
 <script>
