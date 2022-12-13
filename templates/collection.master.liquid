@@ -2,6 +2,7 @@
 
 {% section 'collection-hero' %}
 
+<div class="container">
 <div class="collection__list">
     {% assign selected_handles = collection.metafields.accentuate.collections_grid | split: '|' %}
         {% for collection in selected_handles %}
@@ -11,4 +12,5 @@
                 <img class="collection__icon" src="{{ '../assets/icon.right.svg' | asset_url }}" alt="">
             </div>
         {% endfor %}
+</div>
 </div>

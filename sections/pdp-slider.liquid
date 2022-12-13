@@ -4,13 +4,18 @@
 <style>
     .mySwiper {
       height: 100vh;
-      display: flex;
     }
     .swiper__image{
       object-fit: cover;
+      height: 100%;
     }
     :root{
       --swiper-theme-color: #353535;
+    }
+    @media (max-width: 800px){
+      .product__pagination{
+        display: none;
+      }
     }
 
   </style>

@@ -1,16 +1,6 @@
+{{ 'style.pdp.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .product__wrapper{
-    display: flex;
-    margin: 50px 0 0 0;
-    font-family: 'Open Sans';
-    position: relative;
-  }
-  .product__div{
-    width: 50%;
-  }
-</style>
-
+<div class="container">
 <div class="product__wrapper">
   <div class="product__div">
     {% section 'pdp-slider' %}
@@ -18,6 +8,7 @@
   <div class="product__div">
     {% section 'pdp-hero' %}
   </div>
+</div>
 </div>
 
 

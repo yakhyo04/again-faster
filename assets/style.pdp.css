@@ -1,0 +1,19 @@
+.product__wrapper{
+    display: flex;
+    margin: 50px 0 0 0;
+    font-family: 'Open Sans';
+    position: relative;
+  }
+  .product__div{
+    width: 50%;
+  }
+
+
+/* @media (max-width: 1000px){
+    .product__wrapper{
+        display: block !important;
+    }
+    .product__div{
+        width: 100% !important;
+    }
+} */

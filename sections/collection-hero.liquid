@@ -1,6 +1,6 @@
 {{ 'style.collection.hero.css' | asset_url | stylesheet_tag }}
 
- 
+<div class="container">
 <div class="collection__wrapper">
     <div class="collection__richtext--wrapper">
         <p class="richtext--label">{{ collection.metafields.accentuate.eyebrow | newline_to_br }}</p>
@@ -15,4 +15,5 @@
         <img class="collection__image" width="304px" height="359px" src="{{ image.src }}" alt="">
         {% endfor %}
     </div>
+</div>
 </div>
