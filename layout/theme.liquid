@@ -75,6 +75,7 @@
 </head>
 <body id="body" class="{% if template == 'index' %} home {% endif %}" >
   {{ localization.country.iso_code }}
+  {{ request.locale.iso_code }}
   {% section 'announcement' %}
   {% section 'header' %}
   
